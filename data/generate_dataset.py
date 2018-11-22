@@ -20,16 +20,18 @@ parser.add_argument('--sample-freq', type=int, default=100,
                     help='How often to sample the trajectory.')
 parser.add_argument('--n-balls', type=int, default=5,
                     help='Number of balls in the simulation.')
+parser.add_argument('--noise', type=float, default=0.,
+                    help='Noise variance on trajectory samples.')
 parser.add_argument('--seed', type=int, default=42,
                     help='Random seed.')
 
 args = parser.parse_args()
 
 if args.simulation == 'springs':
-    sim = SpringSim(noise_var=0.0, n_balls=args.n_balls)
+    sim = SpringSim(noise_var=args.noise, n_balls=args.n_balls)
     suffix = '_springs'
 elif args.simulation == 'charged':
-    sim = ChargedParticlesSim(noise_var=0.0, n_balls=args.n_balls)
+    sim = ChargedParticlesSim(noise_var=args.noise, n_balls=args.n_balls)
     suffix = '_charged'
 else:
     raise ValueError('Simulation {} not implemented'.format(args.simulation))
